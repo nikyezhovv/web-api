@@ -50,7 +50,7 @@ public class UsersController : ControllerBase
         var userEntity = _mapper.Map<UserEntity>(user);
         var createdUserEntity = _userRepository.Insert(userEntity);
 
-        return CreatedUserResponse(createdUserEntity.Id);
+        return CreatedAtRoute(nameof(GetUserById), new { createdUserEntity.Id }, createdUserEntity.Id);
     }
 
     [HttpPut("{userId}")]
@@ -68,7 +68,7 @@ public class UsersController : ControllerBase
         _userRepository.UpdateOrInsert(userEntity, out var isInserted);
 
         return isInserted
-            ? CreatedUserResponse(userEntity.Id)
+            ? CreatedAtRoute(nameof(GetUserById), new { userEntity.Id }, userEntity.Id)
             : NoContent();
     }
 
@@ -136,11 +136,6 @@ public class UsersController : ControllerBase
     {
         Response.Headers.Append("Allow", "GET, POST, OPTIONS");
         return Ok();
-    }
-
-    private CreatedAtRouteResult CreatedUserResponse(Guid userId)
-    {
-        return CreatedAtRoute(nameof(GetUserById), new { userId }, userId);
     }
 
     private void AddPaginationHeader(PageList<UserEntity> page, int pageNumber, int size)

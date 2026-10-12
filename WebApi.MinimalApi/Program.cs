@@ -6,8 +6,6 @@ using Newtonsoft.Json.Serialization;
 using WebApi.MinimalApi.Domain;
 using WebApi.MinimalApi.Models;
 
-#pragma warning disable CS0618 // Type or member is obsolete
-
 var builder = WebApplication.CreateBuilder(args);
 
 builder.WebHost.UseUrls("https://localhost:5001;http://localhost:5000");
